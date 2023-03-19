@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////
 
 // Init:                                 1
-// Endpoints:                           15
+// Endpoints:                           13
 // Async Callback (empty):               1
-// Total number of exported functions:  17
+// Total number of exported functions:  15
 
 #![no_std]
 #![feature(alloc_error_handler, lang_items)]
@@ -22,15 +22,13 @@ multiversx_sc_wasm_adapter::endpoints! {
         fundSystem
         withdrawFunds
         stake
-        unStake
-        unBond
-        claimRewards
         getToken
         getPause
         getSftsStaked
-        getSftsUnbond
+        getSftStakedAmount
+        getSftStakedAt
+        getSftReward
         getUsersStaked
-        getUsersUnbond
         getTokenAmount
         getRewards
     )

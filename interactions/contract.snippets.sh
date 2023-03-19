@@ -68,7 +68,7 @@ fundSystem() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $TOKEN_XAPE_ID_HEX 50000000000000000000000 $method_name \
+    --arguments $TOKEN_XAPE_ID_HEX 281000000000000000000000 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }

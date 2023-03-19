@@ -1,12 +1,10 @@
 multiversx_sc::imports!();
 
-use crate::model::*;
-
 #[multiversx_sc::module]
 pub trait StorageModule {
     #[view(getToken)]
-    #[storage_mapper("token")]
-    fn token(&self) -> NonFungibleTokenMapper<Self::Api>;
+    #[storage_mapper("collection")]
+    fn collection(&self) -> NonFungibleTokenMapper<Self::Api>;
 
     #[view(getPause)]
     #[storage_mapper("pause")]
@@ -14,11 +12,19 @@ pub trait StorageModule {
 
     #[view(getSftsStaked)]
     #[storage_mapper("sfts_staked")]
-    fn sfts_staked(&self, address: &ManagedAddress) -> SingleValueMapper<SFTStaked<Self::Api>>;
+    fn sfts_staked(&self, address: &ManagedAddress) -> SetMapper<u64>;
 
-    #[view(getSftsUnbond)]
-    #[storage_mapper("sfts_unbond")]
-    fn sfts_unbond(&self, address: &ManagedAddress) -> SingleValueMapper<SFTUnbond<Self::Api>>;
+    #[view(getSftStakedAmount)]
+    #[storage_mapper("sft_staked_amount")]
+    fn sft_staked_amount(&self, nonce: &u64) -> SingleValueMapper<BigUint>;
+
+    #[view(getSftStakedAt)]
+    #[storage_mapper("sft_staked_at")]
+    fn sft_staked_at(&self, nonce: &u64) -> SingleValueMapper<u64>;
+
+    #[view(getSftReward)]
+    #[storage_mapper("sft_reward")]
+    fn sft_reward(&self, nonce: &u64) -> SingleValueMapper<BigUint>;
 
     #[view(getUsersStaked)]
     #[storage_mapper("users_staked")]
@@ -26,10 +32,6 @@ pub trait StorageModule {
 
     #[storage_mapper("user_rewards")]
     fn user_rewards(&self, address: &ManagedAddress) -> SingleValueMapper<BigUint>;
-
-    #[view(getUsersUnbond)]
-    #[storage_mapper("users_unbond")]
-    fn users_unbond(&self) -> SetMapper<ManagedAddress>;
 
     #[view(getTokenAmount)]
     #[storage_mapper("token_amount")]
