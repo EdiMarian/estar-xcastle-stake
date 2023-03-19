@@ -70,6 +70,15 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         Ok(())
     }
+    
+    #[endpoint(unStake)]
+    fn un_stake(&self, token_identifier: TokenIdentifier, nonce: u64, amount: BigUint) {
+        require!(!self.pause().get(), "The stake is stopped!");
+        require!(self.collection().get_token_id() == token_identifier, "Invalid identifier!");
+
+        let caller = self.blockchain().get_caller();
+        require!(!self.sfts_staked(&caller).is_empty(), "You don't have sfts at stake!");
+    }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
         let staked_at = self.sft_staked_at(nonce).get();
