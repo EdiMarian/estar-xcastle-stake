@@ -78,17 +78,33 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         let caller = self.blockchain().get_caller();
         require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");
+
+        self.calculate_rewards_and_save(&nonce, &caller);
+        let amount_staked = self.sft_staked_amount(&nonce).get();
+
+        if amount_staked - &amount > BigUint::zero() {
+            self.sft_staked_amount(&nonce).update(|amount_on_stake| *amount_on_stake -= amount);
+        } else {
+            self.sft_staked_amount(&nonce).clear();
+            self.sft_staked_at(&nonce).clear();
+            self.sfts_staked(&caller).remove(&nonce);
+        }
+
+        if self.sfts_staked(&caller).len() == 0 {
+            self.users_staked().remove(&caller);
+        }
     }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
         let staked_at = self.sft_staked_at(nonce).get();
+        let amount_staked = self.sft_staked_amount(nonce).get();
         let current_time = self.blockchain().get_block_timestamp();
         let sft_reward = self.sft_reward(nonce).get();
 
         let days_staked = (current_time - staked_at) / ONE_DAY_IN_SECONDS;
 
         if days_staked > 0u64 {
-            let actual_reward = sft_reward * BigUint::from(days_staked);
+            let actual_reward = sft_reward * BigUint::from(days_staked) * amount_staked;
             self.user_rewards(address).update(|amount| *amount += actual_reward);
         }
     }
