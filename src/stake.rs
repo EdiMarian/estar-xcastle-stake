@@ -77,7 +77,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(self.collection().get_token_id() == token_identifier, "Invalid identifier!");
 
         let caller = self.blockchain().get_caller();
-        require!(!self.sfts_staked(&caller).is_empty(), "You don't have sfts at stake!");
+        require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");
     }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
