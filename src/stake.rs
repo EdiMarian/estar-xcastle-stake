@@ -56,12 +56,12 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         if self.sfts_staked(&caller).contains(&token_payment.token_nonce) {
             self.calculate_rewards_and_save(&token_payment.token_nonce, &caller);
-            self.sft_staked_at(&token_payment.token_nonce).set(current_time);
-            self.sft_staked_amount(&token_payment.token_nonce).update(|amount| *amount += token_payment.amount);
+            self.sft_staked_at(&caller, &token_payment.token_nonce).set(current_time);
+            self.sft_staked_amount(&caller, &token_payment.token_nonce).update(|amount| *amount += token_payment.amount);
         } else {
             self.sfts_staked(&caller).insert(token_payment.token_nonce);
-            self.sft_staked_amount(&token_payment.token_nonce).set(token_payment.amount);
-            self.sft_staked_at(&token_payment.token_nonce).set(current_time);
+            self.sft_staked_amount(&caller, &token_payment.token_nonce).set(token_payment.amount);
+            self.sft_staked_at(&caller, &token_payment.token_nonce).set(current_time);
         }
 
         if !self.users_staked().contains(&caller) {
@@ -78,26 +78,29 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         let caller = self.blockchain().get_caller();
         require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");
+        require!(self.sft_staked_amount(&caller, &nonce).get() > amount, "You don't have enough sfts at stake!");
 
         self.calculate_rewards_and_save(&nonce, &caller);
-        let amount_staked = self.sft_staked_amount(&nonce).get();
+        let amount_staked = self.sft_staked_amount(&caller, &nonce).get();
 
         if amount_staked - &amount > BigUint::zero() {
-            self.sft_staked_amount(&nonce).update(|amount_on_stake| *amount_on_stake -= amount);
+            self.sft_staked_amount(&caller, &nonce).update(|amount_on_stake| *amount_on_stake -= amount.clone());
         } else {
-            self.sft_staked_amount(&nonce).clear();
-            self.sft_staked_at(&nonce).clear();
+            self.sft_staked_amount(&caller, &nonce).clear();
+            self.sft_staked_at(&caller, &nonce).clear();
             self.sfts_staked(&caller).remove(&nonce);
         }
 
         if self.sfts_staked(&caller).len() == 0 {
             self.users_staked().remove(&caller);
         }
+
+        self.send().direct_esdt(&caller, &token_identifier, nonce, &amount)
     }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
-        let staked_at = self.sft_staked_at(nonce).get();
-        let amount_staked = self.sft_staked_amount(nonce).get();
+        let staked_at = self.sft_staked_at(address, nonce).get();
+        let amount_staked = self.sft_staked_amount(address, nonce).get();
         let current_time = self.blockchain().get_block_timestamp();
         let sft_reward = self.sft_reward(nonce).get();
 
