@@ -11,9 +11,12 @@ const TOKEN_DECIMALS: u64 = 1000000000000000000;
 #[multiversx_sc::contract]
 pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[init]
-    fn init(&self, collection: TokenIdentifier) {
+    fn init(&self, collection: TokenIdentifier, token: TokenIdentifier) {
         if self.collection().is_empty() {
             self.collection().set_token_id(collection);
+        }
+        if self.token_payment().is_empty() {
+            self.token_payment().set(token)
         }
     }
 
