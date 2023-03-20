@@ -108,6 +108,9 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(self.token_amount().get() >= rewards, "There are not enough funds!");
 
         self.reset_sfts_staked_time(&caller);
+
+        let rewards_after_dec = rewards * BigUint::from(TOKEN_DECIMALS);
+        self.send().direct_esdt(&caller, &self.token_payment().get(), 0, &rewards_after_dec);
     }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
