@@ -102,6 +102,8 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(self.users_staked().contains(&caller), "You don't have sfts at stake!");
         let rewards = self.get_rewards(&caller);
         require!(rewards > BigUint::zero(), "You don't have rewards to claim!");
+
+        self.reset_sfts_staked_time(&caller);
     }
 
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
@@ -115,6 +117,14 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         if days_staked > 0u64 {
             let actual_reward = sft_reward * BigUint::from(days_staked) * amount_staked;
             self.user_rewards(address).update(|amount| *amount += actual_reward);
+        }
+    }
+
+    fn reset_sfts_staked_time(&self, address: &ManagedAddress) {
+        let current_time = self.blockchain().get_block_timestamp();
+
+        for sft in self.sfts_staked(address).iter() {
+            self.sft_staked_at(address, &sft).set(current_time);
         }
     }
 }
