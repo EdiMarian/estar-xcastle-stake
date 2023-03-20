@@ -114,6 +114,11 @@ getPause() {
     --proxy=${PROXY}
 }
 
+getSftsAllowed() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftsAllowed" \
+    --proxy=${PROXY}
+}
+
 getSftsStaked() {
   mxpy --verbose contract query ${ADDRESS} --function="getSftsStaked" --arguments $MY_ADDRESS \
     --proxy=${PROXY}
