@@ -27,6 +27,61 @@ updateContract() {
     --arguments $COLLECTION_ID_HEX $TOKEN_ID_HEX
 }
 
+togglePause() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="togglePause" \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/toggle-pause.json"
+}
+
+setSftsAllowed() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="setSftsAllowed" \
+    --arguments 1 2 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/set-sfts-allowed.json"
+}
+
+setSftsReward() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="setSftsReward" \
+    --arguments 1 10 2 20 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
+}
+
+fundSystem() {
+  method_name="0x$(echo -n 'fundSystem' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="ESDTTransfer" \
+    --arguments $TOKEN_XAPE_ID_HEX 281000000000000000000000 $method_name \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/fund-system.json"
+}
+
+withdrawFunds() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="withdrawFunds" \
+    --arguments 98142999999999999999124 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/withdraw-funds.json"
+}
+
 stake() {
   method_name="0x$(echo -n 'stake' | xxd -p -u | tr -d '\n')"
   mxpy --verbose contract call ${MY_ADDRESS} --recall-nonce \
@@ -50,56 +105,12 @@ unStake() {
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
 
-unBond() {
-  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
-    --pem=${PEM_FILE} \
-    --gas-limit=30000000 \
-    --proxy=${PROXY} --chain=${CHAINID} \
-    --function="unBond" \
-    --arguments $TOKEN_ID_HEX 1 15 \
-    --send \
-    --outfile="${PROJECT}/interactions/logs/unstake.json"
-}
-
-fundSystem() {
-  method_name="0x$(echo -n 'fundSystem' | xxd -p -u | tr -d '\n')"
-  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
-    --pem=${PEM_FILE} \
-    --gas-limit=30000000 \
-    --proxy=${PROXY} --chain=${CHAINID} \
-    --function="ESDTTransfer" \
-    --arguments $TOKEN_XAPE_ID_HEX 281000000000000000000000 $method_name \
-    --send \
-    --outfile="${PROJECT}/interactions/logs/unstake.json"
-}
-
-withdrawFunds() {
-  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
-    --pem=${PEM_FILE} \
-    --gas-limit=30000000 \
-    --proxy=${PROXY} --chain=${CHAINID} \
-    --function="withdrawFunds" \
-    --arguments 98142999999999999999124 \
-    --send \
-    --outfile="${PROJECT}/interactions/logs/unstake.json"
-}
-
 claimRewards() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="claimRewards" \
-    --send \
-    --outfile="${PROJECT}/interactions/logs/unstake.json"
-}
-
-togglePause() {
-  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
-    --pem=${PEM_FILE} \
-    --gas-limit=30000000 \
-    --proxy=${PROXY} --chain=${CHAINID} \
-    --function="togglePause" \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
@@ -151,5 +162,10 @@ getTokenPayment() {
 
 getTokenAmount() {
   mxpy --verbose contract query ${ADDRESS} --function="getTokenAmount" \
+    --proxy=${PROXY}
+}
+
+getRewards() {
+  mxpy --verbose contract query ${ADDRESS} --function="getRewards" --arguments $MY_ADDRESS \
     --proxy=${PROXY}
 }
