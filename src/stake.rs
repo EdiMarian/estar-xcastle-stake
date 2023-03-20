@@ -105,6 +105,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(self.users_staked().contains(&caller), "You don't have sfts at stake!");
         let rewards = self.get_rewards(&caller);
         require!(rewards > BigUint::zero(), "You don't have rewards to claim!");
+        require!(self.token_amount().get() >= rewards, "There are not enough funds!");
 
         self.reset_sfts_staked_time(&caller);
     }
