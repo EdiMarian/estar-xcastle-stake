@@ -71,6 +71,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(!self.pause().get(), "The stake is stopped!");
         let token_payment = self.call_value().single_esdt();
         require!(self.collection().get_token_id() == token_payment.token_identifier, "Invalid identifier!");
+        require!(self.sfts_allowed().contains(&token_payment.token_nonce), "Invalid sft nonce!");
 
         let caller = self.blockchain().get_caller();
         let current_time = self.blockchain().get_block_timestamp();
