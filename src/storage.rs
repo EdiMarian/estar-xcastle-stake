@@ -33,6 +33,10 @@ pub trait StorageModule {
     #[storage_mapper("user_rewards")]
     fn user_rewards(&self, address: &ManagedAddress) -> SingleValueMapper<BigUint>;
 
+    #[view(getTokenPayment)]
+    #[storage_mapper("token_payment")]
+    fn token_payment(&self) -> SingleValueMapper<TokenIdentifier>;
+
     #[view(getTokenAmount)]
     #[storage_mapper("token_amount")]
     fn token_amount(&self) -> SingleValueMapper<BigUint>;
