@@ -16,11 +16,11 @@ pub trait StorageModule {
 
     #[view(getSftStakedAmount)]
     #[storage_mapper("sft_staked_amount")]
-    fn sft_staked_amount(&self, nonce: &u64) -> SingleValueMapper<BigUint>;
+    fn sft_staked_amount(&self, address: &ManagedAddress, nonce: &u64) -> SingleValueMapper<BigUint>;
 
     #[view(getSftStakedAt)]
     #[storage_mapper("sft_staked_at")]
-    fn sft_staked_at(&self, nonce: &u64) -> SingleValueMapper<u64>;
+    fn sft_staked_at(&self, address: &ManagedAddress, nonce: &u64) -> SingleValueMapper<u64>;
 
     #[view(getSftReward)]
     #[storage_mapper("sft_reward")]
