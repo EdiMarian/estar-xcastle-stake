@@ -1,30 +1,30 @@
 PROJECT="${PWD}"
 
-TOKEN_ID="XAC-db0359"
+COLLECTION_ID="XCARD-6c24da"
+COLLECTION_ID_HEX="0x$(echo -n ${COLLECTION_ID} | xxd -p -u | tr -d '\n')"
+
+TOKEN_ID="ESTAR-ccc274"
 TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
 
-TOKEN_XAPE_ID="XAPES-1d15a5"
-TOKEN_XAPE_ID_HEX="0x$(echo -n ${TOKEN_XAPE_ID} | xxd -p -u | tr -d '\n')"
-
-PEM_FILE="/home/edi/Desktop/wallet-xapes/wallet.pem"
-PROXY=https://gateway.multiversx.com
-CHAINID=1
-ADDRESS=erd1qqqqqqqqqqqqqpgqnazwq686e4r58750mwm5hef4lsdwr4rmd8as3qn9eu
-MY_ADDRESS="erd1hkh4mjgqa3njlae9r7meua4per2ga8l7k6akfw2j5p4l73zgd8as0vh83e"
+PEM_FILE="/home/edi/Desktop/my-wallet/my_wallet.pem"
+PROXY=https://devnet-gateway.multiversx.com
+CHAINID=D
+ADDRESS=erd1qqqqqqqqqqqqqpgqfq7py50tnxg6042yg6wanshfspf204ptxszqnzdggr
+MY_ADDRESS="erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454"
 
 
 deploy() {
   mxpy --verbose contract deploy --project=${PROJECT} --recall-nonce --pem=${PEM_FILE} \
     --gas-limit=60000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $TOKEN_ID_HEX || return
+    --arguments $COLLECTION_ID_HEX $TOKEN_ID_HEX || return
 }
 
 updateContract() {
   mxpy --verbose contract upgrade ${ADDRESS} --project=${PROJECT} --recall-nonce --pem=${PEM_FILE} \
-    --gas-limit=60000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
+    --gas-limit=60000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $TOKEN_ID_HEX
+    --arguments $COLLECTION_ID_HEX $TOKEN_ID_HEX
 }
 
 stake() {
@@ -34,7 +34,7 @@ stake() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTNFTTransfer" \
-    --arguments $TOKEN_ID_HEX 1 1 $ADDRESS $method_name \
+    --arguments $COLLECTION_ID_HEX 1 1 $ADDRESS $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/stake.json"
 }
@@ -104,13 +104,8 @@ togglePause() {
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
 
-getUsersStaked() {
-  mxpy --verbose contract query ${ADDRESS} --function="getUsersStaked" \
-    --proxy=${PROXY}
-}
-
-getSftsStaked() {
-  mxpy --verbose contract query ${ADDRESS} --function="getSftsStaked" --arguments $MY_ADDRESS \
+getToken() {
+  mxpy --verbose contract query ${ADDRESS} --function="getToken" \
     --proxy=${PROXY}
 }
 
@@ -119,8 +114,33 @@ getPause() {
     --proxy=${PROXY}
 }
 
-getRewards() {
-  mxpy --verbose contract query ${ADDRESS} --function="getRewards" --arguments $MY_ADDRESS \
+getSftsStaked() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftsStaked" --arguments $MY_ADDRESS \
+    --proxy=${PROXY}
+}
+
+getSftStakedAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftStakedAmount" --arguments $MY_ADDRESS 1 \
+    --proxy=${PROXY}
+}
+
+getSftStakedAt() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftStakedAt" --arguments $MY_ADDRESS 1 \
+    --proxy=${PROXY}
+}
+
+getSftReward() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftReward" --arguments 1 \
+    --proxy=${PROXY}
+}
+
+getUsersStaked() {
+  mxpy --verbose contract query ${ADDRESS} --function="getUsersStaked" \
+    --proxy=${PROXY}
+}
+
+getTokenPayment() {
+  mxpy --verbose contract query ${ADDRESS} --function="getTokenPayment" \
     --proxy=${PROXY}
 }
 
