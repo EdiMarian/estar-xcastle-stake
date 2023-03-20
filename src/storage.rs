@@ -2,8 +2,7 @@ multiversx_sc::imports!();
 
 #[multiversx_sc::module]
 pub trait StorageModule {
-    //todo: change in getCollection
-    #[view(getToken)]
+    #[view(getCollection)]
     #[storage_mapper("collection")]
     fn collection(&self) -> NonFungibleTokenMapper<Self::Api>;
 
