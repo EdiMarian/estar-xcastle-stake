@@ -27,6 +27,15 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     }
 
     #[only_owner]
+    #[endpoint(setSftsReward)]
+    fn set_sft_reward(&self, sfts_with_reward_amount: MultiValueEncoded<MultiValue2<u64, BigUint>>) {
+        for sft_with_reward_amount in sfts_with_reward_amount.into_iter() {
+            let (nonce, reward_amount) = sft_with_reward_amount.into_tuple();
+            self.sft_reward(&nonce).set(reward_amount);
+        }
+    }
+
+    #[only_owner]
     #[payable("*")]
     #[endpoint(fundSystem)]
     fn fund(&self) {
