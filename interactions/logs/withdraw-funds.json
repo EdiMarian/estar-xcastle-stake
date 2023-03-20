@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 445,
+        "nonce": 412,
         "value": "0",
         "receiver": "erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz",
         "sender": "erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454",
         "gasPrice": 1000000000,
         "gasLimit": 30000000,
-        "data": "Y2xhaW1SZXdhcmRz",
+        "data": "d2l0aGRyYXdGdW5kc0AwMTBGMENGMDY0REQ1OTIwMDAwMA==",
         "chainID": "D",
         "version": 1,
-        "signature": "9b0d56fd7661b6773929e204f137b03e28e3819930379348be03b85baaee13638a8c36d5059a64c2210d6b9f4e9c081bd19f8bb6e0d039d19b32a9a289bca80b"
+        "signature": "4d4b4c545e083e170c454259f68f2c03590494981aa48d924d26efc93ec9a8f5c84f70469bfd7558a97a334a00bdaae3bdc049b1fddeaa86afec7cb25e8ae006"
     },
-    "emittedTransactionData": "claimRewards",
-    "emittedTransactionHash": "84f2fe7dc479542c289d6bbc86985f1825d058105d9385a92141a9f15650a044",
+    "emittedTransactionData": "withdrawFunds@010F0CF064DD59200000",
+    "emittedTransactionHash": "88ef0da1815ec8a76834ac5decbd15735ee4a403418fa47332ffdbd481865456",
     "contractAddress": "erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz"
 }

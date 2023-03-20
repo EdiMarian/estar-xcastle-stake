@@ -9,7 +9,7 @@ TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
 PEM_FILE="/home/edi/Desktop/my-wallet/my_wallet.pem"
 PROXY=https://devnet-gateway.multiversx.com
 CHAINID=D
-ADDRESS=erd1qqqqqqqqqqqqqpgqfq7py50tnxg6042yg6wanshfspf204ptxszqnzdggr
+ADDRESS=erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz
 MY_ADDRESS="erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454"
 
 
@@ -66,7 +66,7 @@ fundSystem() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $TOKEN_XAPE_ID_HEX 281000000000000000000000 $method_name \
+    --arguments $TOKEN_ID_HEX 5000000000000000000000 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
@@ -77,7 +77,7 @@ withdrawFunds() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="withdrawFunds" \
-    --arguments 98142999999999999999124 \
+    --arguments 5000000000000000000000 \
     --send \
     --outfile="${PROJECT}/interactions/logs/withdraw-funds.json"
 }
@@ -89,7 +89,7 @@ stake() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTNFTTransfer" \
-    --arguments $COLLECTION_ID_HEX 1 1 $ADDRESS $method_name \
+    --arguments $COLLECTION_ID_HEX 3 1 $ADDRESS $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/stake.json"
 }
@@ -100,7 +100,7 @@ unStake() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="unStake" \
-    --arguments $TOKEN_ID_HEX 1 1 \
+    --arguments $COLLECTION_ID_HEX 2 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }

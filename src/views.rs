@@ -1,6 +1,8 @@
 multiversx_sc::imports!();
 
+use crate::model::SftStaked;
 use crate::storage;
+use crate::heap::Vec;
 use crate::ONE_DAY_IN_SECONDS;
 
 #[multiversx_sc::module]
@@ -20,6 +22,21 @@ pub trait ViewsModule: storage::StorageModule {
         }
 
         total
+    }
+
+    #[view(getSftsStaked)]
+    fn get_sfts_staked(&self, address: &ManagedAddress) -> Vec<SftStaked<Self::Api>> {
+        let mut sfts = Vec::new();
+        for sft_nonce in self.sfts_staked(address).iter() {
+            let sft_staked = SftStaked {
+                nonce: sft_nonce.clone(),
+                amount: self.sft_staked_amount(address, &sft_nonce).get(),
+                staked_at: self.sft_staked_at(address, &sft_nonce).get(),
+            };
+            sfts.push(sft_staked);
+        }
+
+        sfts
     }
 
     fn calculate_sft_reward(&self, nonce: &u64, address: &ManagedAddress) -> BigUint {

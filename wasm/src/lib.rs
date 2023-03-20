@@ -26,10 +26,9 @@ multiversx_sc_wasm_adapter::endpoints! {
         stake
         unStake
         claimRewards
-        getToken
+        getCollection
         getPause
         getSftsAllowed
-        getSftsStaked
         getSftStakedAmount
         getSftStakedAt
         getSftReward
@@ -37,6 +36,7 @@ multiversx_sc_wasm_adapter::endpoints! {
         getTokenPayment
         getTokenAmount
         getRewards
+        getSftsStaked
     )
 }
 

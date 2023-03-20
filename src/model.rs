@@ -2,12 +2,8 @@ multiversx_sc::imports!();
 multiversx_sc::derive_imports!();
 
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, TypeAbi)]
-pub enum Category {
-    None,
-    Bank,
-    Mill,
-    Taverne,
-    Watch_Tower,
-    Forge,
-    House
+pub struct SftStaked<M: ManagedTypeApi> {
+    pub nonce: u64,
+    pub amount: BigUint<M>,
+    pub staked_at: u64,
 }

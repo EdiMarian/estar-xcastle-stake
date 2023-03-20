@@ -3,9 +3,10 @@
 multiversx_sc::imports!();
 
 mod storage;
+pub mod model;
 mod views;
 
-const ONE_DAY_IN_SECONDS: u64 = 86400;
+const ONE_DAY_IN_SECONDS: u64 = 60;
 const TOKEN_DECIMALS: u64 = 1000000000000000000;
 
 #[multiversx_sc::contract]
@@ -77,7 +78,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         let current_time = self.blockchain().get_block_timestamp();
 
         if self.sfts_staked(&caller).contains(&token_payment.token_nonce) {
-            self.calculate_rewards_and_save(&token_payment.token_nonce, &caller);
+            self.calculate_rewards_and_save(&token_payment.token_nonce, &caller, &self.sft_staked_amount(&caller, &token_payment.token_nonce).get());
             self.sft_staked_at(&caller, &token_payment.token_nonce).set(current_time);
             self.sft_staked_amount(&caller, &token_payment.token_nonce).update(|amount| *amount += token_payment.amount);
         } else {
@@ -98,9 +99,9 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         let caller = self.blockchain().get_caller();
         require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");
-        require!(self.sft_staked_amount(&caller, &nonce).get() > amount, "You don't have enough sfts at stake!");
+        require!(self.sft_staked_amount(&caller, &nonce).get() >= amount, "You don't have enough sfts at stake!");
 
-        self.calculate_rewards_and_save(&nonce, &caller);
+        self.calculate_rewards_and_save(&nonce, &caller, &amount);
         let amount_staked = self.sft_staked_amount(&caller, &nonce).get();
 
         if amount_staked - &amount > BigUint::zero() {
@@ -120,7 +121,6 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[endpoint(claimRewards)]
     fn claim_rewards(&self) {
         let caller = self.blockchain().get_caller();
-        require!(self.users_staked().contains(&caller), "You don't have sfts at stake!");
         let rewards = self.get_rewards(&caller);
         require!(rewards > BigUint::zero(), "You don't have rewards to claim!");
         require!(self.token_amount().get() >= rewards, "There are not enough funds!");
@@ -128,21 +128,21 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         self.reset_sfts_staked_time(&caller);
 
         let rewards_after_dec = rewards.clone() * BigUint::from(TOKEN_DECIMALS);
-        self.token_amount().update(|amount| *amount -= &rewards);
+        self.token_amount().update(|amount| *amount -= &rewards_after_dec);
+        self.user_rewards(&caller).set(BigUint::zero());
 
         self.send().direct_esdt(&caller, &self.token_payment().get(), 0, &rewards_after_dec);
     }
 
-    fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
+    fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress, amount_to_unstake: &BigUint) {
         let staked_at = self.sft_staked_at(address, nonce).get();
-        let amount_staked = self.sft_staked_amount(address, nonce).get();
         let current_time = self.blockchain().get_block_timestamp();
         let sft_reward = self.sft_reward(nonce).get();
 
         let days_staked = (current_time - staked_at) / ONE_DAY_IN_SECONDS;
 
         if days_staked > 0u64 {
-            let actual_reward = sft_reward * BigUint::from(days_staked) * amount_staked;
+            let actual_reward = sft_reward * BigUint::from(days_staked) * amount_to_unstake;
             self.user_rewards(address).update(|amount| *amount += actual_reward);
         }
     }
