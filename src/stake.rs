@@ -27,6 +27,23 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     }
 
     #[only_owner]
+    #[endpoint(setSftsAllowed)]
+    fn set_sfts_allowed(&self, sfts_allowed: MultiValueEncoded<u64>) {
+        for sft_allowed in sfts_allowed.into_iter() {
+            self.sfts_allowed().insert(sft_allowed);
+        }
+    }
+
+    #[only_owner]
+    #[endpoint(setSftsReward)]
+    fn set_sft_reward(&self, sfts_with_reward_amount: MultiValueEncoded<MultiValue2<u64, BigUint>>) {
+        for sft_with_reward_amount in sfts_with_reward_amount.into_iter() {
+            let (nonce, reward_amount) = sft_with_reward_amount.into_tuple();
+            self.sft_reward(&nonce).set(reward_amount);
+        }
+    }
+
+    #[only_owner]
     #[payable("*")]
     #[endpoint(fundSystem)]
     fn fund(&self) {
@@ -54,6 +71,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(!self.pause().get(), "The stake is stopped!");
         let token_payment = self.call_value().single_esdt();
         require!(self.collection().get_token_id() == token_payment.token_identifier, "Invalid identifier!");
+        require!(self.sfts_allowed().contains(&token_payment.token_nonce), "Invalid sft nonce!");
 
         let caller = self.blockchain().get_caller();
         let current_time = self.blockchain().get_block_timestamp();

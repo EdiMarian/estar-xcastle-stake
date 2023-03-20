@@ -10,6 +10,10 @@ pub trait StorageModule {
     #[storage_mapper("pause")]
     fn pause(&self) -> SingleValueMapper<bool>;
 
+    #[view(getSftsAllowed)]
+    #[storage_mapper("sfts_allowed")]
+    fn sfts_allowed(&self) -> SetMapper<u64>;
+
     #[view(getSftsStaked)]
     #[storage_mapper("sfts_staked")]
     fn sfts_staked(&self, address: &ManagedAddress) -> SetMapper<u64>;
