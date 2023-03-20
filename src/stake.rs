@@ -96,6 +96,14 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         self.send().direct_esdt(&caller, &token_identifier, nonce, &amount)
     }
 
+    #[endpoint(claimRewards)]
+    fn claim_rewards(&self) {
+        let caller = self.blockchain().get_caller();
+        require!(self.users_staked().contains(&caller), "You don't have sfts at stake!");
+        let rewards = self.get_rewards(&caller);
+        require!(rewards > BigUint::zero(), "You don't have rewards to claim!");
+    }
+
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
         let staked_at = self.sft_staked_at(address, nonce).get();
         let amount_staked = self.sft_staked_amount(address, nonce).get();
