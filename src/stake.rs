@@ -46,7 +46,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
     #[payable("*")]
     #[endpoint(stake)]
-    fn stake(&self) -> SCResult<()> {
+    fn stake(&self) {
         require!(!self.pause().get(), "The stake is stopped!");
         let token_payment = self.call_value().single_esdt();
         require!(self.collection().get_token_id() == token_payment.token_identifier, "Invalid identifier!");
@@ -67,8 +67,6 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         if !self.users_staked().contains(&caller) {
             self.users_staked().insert(caller);
         }
-
-        Ok(())
     }
     
     #[endpoint(unStake)]
