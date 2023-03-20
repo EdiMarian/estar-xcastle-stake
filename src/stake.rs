@@ -31,7 +31,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[endpoint(fundSystem)]
     fn fund(&self) {
         let payment = self.call_value().single_esdt();
-
+        require!(self.token_payment().get() == payment.token_identifier, "Invalid token!");
         require!(payment.amount > BigUint::zero(), "Amount must be greater than zero!");
 
         self.token_amount().update(|amount| *amount += payment.amount);
@@ -43,8 +43,9 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     fn withdraw(&self, withdraw_amount: BigUint) {
         let caller = self.blockchain().get_caller();
         require!(withdraw_amount > BigUint::zero(), "Amount must be greater than zero!");
-        self.send().direct_esdt(&caller, &TokenIdentifier::from("XAPES-1d15a5".as_bytes()), 0, &withdraw_amount);
+
         self.token_amount().update(|amount| *amount -= &withdraw_amount);
+        self.send().direct_esdt(&caller, &self.token_payment().get(), 0, &withdraw_amount);
     }
 
     #[payable("*")]
@@ -95,8 +96,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         if self.sfts_staked(&caller).len() == 0 {
             self.users_staked().remove(&caller);
         }
-
-        self.send().direct_esdt(&caller, &token_identifier, nonce, &amount)
+        self.send().direct_esdt(&caller, &token_identifier, nonce, &amount);
     }
 
     #[endpoint(claimRewards)]
@@ -109,7 +109,9 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
 
         self.reset_sfts_staked_time(&caller);
 
-        let rewards_after_dec = rewards * BigUint::from(TOKEN_DECIMALS);
+        let rewards_after_dec = rewards.clone() * BigUint::from(TOKEN_DECIMALS);
+        self.token_amount().update(|amount| *amount -= &rewards);
+
         self.send().direct_esdt(&caller, &self.token_payment().get(), 0, &rewards_after_dec);
     }
 
