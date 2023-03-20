@@ -11,9 +11,12 @@ const TOKEN_DECIMALS: u64 = 1000000000000000000;
 #[multiversx_sc::contract]
 pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[init]
-    fn init(&self, collection: TokenIdentifier) {
+    fn init(&self, collection: TokenIdentifier, token: TokenIdentifier) {
         if self.collection().is_empty() {
             self.collection().set_token_id(collection);
+        }
+        if self.token_payment().is_empty() {
+            self.token_payment().set(token)
         }
     }
 
@@ -96,6 +99,20 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         self.send().direct_esdt(&caller, &token_identifier, nonce, &amount)
     }
 
+    #[endpoint(claimRewards)]
+    fn claim_rewards(&self) {
+        let caller = self.blockchain().get_caller();
+        require!(self.users_staked().contains(&caller), "You don't have sfts at stake!");
+        let rewards = self.get_rewards(&caller);
+        require!(rewards > BigUint::zero(), "You don't have rewards to claim!");
+        require!(self.token_amount().get() >= rewards, "There are not enough funds!");
+
+        self.reset_sfts_staked_time(&caller);
+
+        let rewards_after_dec = rewards * BigUint::from(TOKEN_DECIMALS);
+        self.send().direct_esdt(&caller, &self.token_payment().get(), 0, &rewards_after_dec);
+    }
+
     fn calculate_rewards_and_save(&self, nonce: &u64, address: &ManagedAddress) {
         let staked_at = self.sft_staked_at(address, nonce).get();
         let amount_staked = self.sft_staked_amount(address, nonce).get();
@@ -107,6 +124,14 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         if days_staked > 0u64 {
             let actual_reward = sft_reward * BigUint::from(days_staked) * amount_staked;
             self.user_rewards(address).update(|amount| *amount += actual_reward);
+        }
+    }
+
+    fn reset_sfts_staked_time(&self, address: &ManagedAddress) {
+        let current_time = self.blockchain().get_block_timestamp();
+
+        for sft in self.sfts_staked(address).iter() {
+            self.sft_staked_at(address, &sft).set(current_time);
         }
     }
 }
