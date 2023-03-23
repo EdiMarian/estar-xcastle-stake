@@ -3,13 +3,13 @@ PROJECT="${PWD}"
 COLLECTION_ID="XCASTLE-ee733b"
 COLLECTION_ID_HEX="0x$(echo -n ${COLLECTION_ID} | xxd -p -u | tr -d '\n')"
 
-TOKEN_ID="ESTAR-461bab"
+TOKEN_ID="ECCU-29891f"
 TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
 
 PEM_FILE="/home/edi/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://gateway.multiversx.com
 CHAINID=1
-ADDRESS=erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz
+ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
 MY_ADDRESS="erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v"
 
 
@@ -43,9 +43,20 @@ setSftsAllowed() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsAllowed" \
-    --arguments 1 2 \
+    --arguments 2 3 4 5 6 7 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-allowed.json"
+}
+
+removeSftsAllowed() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="removeSftsAllowed" \
+    --arguments 8 9 10 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/remove-sfts-allowed.json"
 }
 
 setSftsReward() {
@@ -54,7 +65,7 @@ setSftsReward() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsReward" \
-    --arguments 1 10 2 20 \
+    --arguments 2 5 3 7 4 5 5 7 6 7 7 5 14 12 15 12 16 15 17 15 18 10 19 12 20 25 21 25 22 25 23 25 24 25 25 25 26 50 27 50 28 50 29 50 30 50 31 50\
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
@@ -66,7 +77,7 @@ fundSystem() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $TOKEN_ID_HEX 5000000000000000000000 $method_name \
+    --arguments $TOKEN_ID_HEX 400 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
@@ -77,7 +88,7 @@ withdrawFunds() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="withdrawFunds" \
-    --arguments 5000000000000000000000 \
+    --arguments 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/withdraw-funds.json"
 }
@@ -115,8 +126,8 @@ claimRewards() {
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
 
-getToken() {
-  mxpy --verbose contract query ${ADDRESS} --function="getToken" \
+getCollection() {
+  mxpy --verbose contract query ${ADDRESS} --function="getCollection" \
     --proxy=${PROXY}
 }
 

@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 406,
+        "nonce": 546,
         "value": "0",
-        "receiver": "erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz",
-        "sender": "erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454",
+        "receiver": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6",
+        "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
         "gasLimit": 30000000,
-        "data": "c2V0U2Z0c1Jld2FyZEAwMUAwQUAwMkAxNA==",
-        "chainID": "D",
+        "data": "c2V0U2Z0c1Jld2FyZEAwMkAwNUAwM0AwN0AwNEAwNUAwNUAwN0AwNkAwN0AwN0AwNUAwRUAwQ0AwRkAwQ0AxMEAwRkAxMUAwRkAxMkAwQUAxM0AwQ0AxNEAxOUAxNUAxOUAxNkAxOUAxN0AxOUAxOEAxOUAxOUAxOUAxQUAzMkAxQkAzMkAxQ0AzMkAxREAzMkAxRUAzMkAxRkAzMg==",
+        "chainID": "1",
         "version": 1,
-        "signature": "bbfab1c438172f5872919982866d7d5ea85d183509dda45409aede9a145bf560f77cfad90677b22de38734e41c6e7e7d0f71c2744e6bc50d37e8092cec5ffc0f"
+        "signature": "5f3103ebbe2b84c2986c092a1af7601cc97b6c95bc9c5afc668805f5409d2f4dad846d1eebaa2a03e1d67285d2e2de0d94ede04c2f0bec24021c02c2a11b7403"
     },
-    "emittedTransactionData": "setSftsReward@01@0A@02@14",
-    "emittedTransactionHash": "1aabcefa16edbd98d6338dbffd3d597dbd49b66c30c5ee79d275cb7749da9393",
-    "contractAddress": "erd1qqqqqqqqqqqqqpgqfpt0nxlee9zvdf4v4ckks4v3rfm2hk4uxszqlvh0dz"
+    "emittedTransactionData": "setSftsReward@02@05@03@07@04@05@05@07@06@07@07@05@0E@0C@0F@0C@10@0F@11@0F@12@0A@13@0C@14@19@15@19@16@19@17@19@18@19@19@19@1A@32@1B@32@1C@32@1D@32@1E@32@1F@32",
+    "emittedTransactionHash": "ec100ffca579367d0fcf04c54b6b06def80389ba53b0a277d22611df4a958632",
+    "contractAddress": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6"
 }

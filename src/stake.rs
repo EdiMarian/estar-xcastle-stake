@@ -7,18 +7,14 @@ pub mod model;
 mod views;
 
 const ONE_DAY_IN_SECONDS: u64 = 86400;
-const TOKEN_DECIMALS: u64 = 1000000000000000000;
+const TOKEN_DECIMALS: u64 = 1;
 
 #[multiversx_sc::contract]
 pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[init]
     fn init(&self, collection: TokenIdentifier, token: TokenIdentifier) {
-        if self.collection().is_empty() {
-            self.collection().set_token_id(collection);
-        }
-        if self.token_payment().is_empty() {
-            self.token_payment().set(token)
-        }
+        self.collection().set(collection);
+        self.token_payment().set(token);
     }
 
     #[only_owner]
@@ -32,6 +28,14 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     fn set_sfts_allowed(&self, sfts_allowed: MultiValueEncoded<u64>) {
         for sft_allowed in sfts_allowed.into_iter() {
             self.sfts_allowed().insert(sft_allowed);
+        }
+    }
+
+    #[only_owner]
+    #[endpoint(removeSftsAllowed)]
+    fn remove_sfts_allowed(&self, sfts_removed: MultiValueEncoded<u64>) {
+        for sft_removed in sfts_removed.into_iter() {
+            self.sfts_allowed().remove(&sft_removed);
         }
     }
 
@@ -71,7 +75,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     fn stake(&self) {
         require!(!self.pause().get(), "The stake is stopped!");
         let token_payment = self.call_value().single_esdt();
-        require!(self.collection().get_token_id() == token_payment.token_identifier, "Invalid identifier!");
+        require!(self.collection().get() == token_payment.token_identifier, "Invalid identifier!");
         require!(self.sfts_allowed().contains(&token_payment.token_nonce), "Invalid sft nonce!");
 
         let caller = self.blockchain().get_caller();
@@ -95,7 +99,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[endpoint(unStake)]
     fn un_stake(&self, token_identifier: TokenIdentifier, nonce: u64, amount: BigUint) {
         require!(!self.pause().get(), "The stake is stopped!");
-        require!(self.collection().get_token_id() == token_identifier, "Invalid identifier!");
+        require!(self.collection().get() == token_identifier, "Invalid identifier!");
 
         let caller = self.blockchain().get_caller();
         require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");

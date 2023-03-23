@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 550,
+        "nonce": 545,
         "value": "0",
         "receiver": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6",
         "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
         "gasLimit": 30000000,
-        "data": "d2l0aGRyYXdGdW5kc0AwMQ==",
+        "data": "cmVtb3ZlU2Z0c0FsbG93ZWRAMDhAMDlAMEE=",
         "chainID": "1",
         "version": 1,
-        "signature": "343233e41c7c13fad6b7e3ce0f2a758e3b7fb03030a4c91e7612c8cd77fec8b54d0b6d71ea1321cbe94f5c677882018a5770d8e34ac77b1b33510fd739c7450c"
+        "signature": "29950a3d5bac6a87218230b2c65fb2d7f6c85b14c3dc764465ec60d3bd63eb935efb17f11180b80eee53b1ccb862469781c1dd8d012494568ffe60894f30230f"
     },
-    "emittedTransactionData": "withdrawFunds@01",
-    "emittedTransactionHash": "63fc4e609cc9cac6ae27aea54644d584ad1b8728dbbcb17a9e69313fc8d2a8cb",
+    "emittedTransactionData": "removeSftsAllowed@08@09@0A",
+    "emittedTransactionHash": "96b50f53a7bdd5aec0d879fbccc68904b53c20a8ecf5096f257bda5d6eefbc77",
     "contractAddress": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6"
 }

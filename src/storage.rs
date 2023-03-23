@@ -4,7 +4,7 @@ multiversx_sc::imports!();
 pub trait StorageModule {
     #[view(getCollection)]
     #[storage_mapper("collection")]
-    fn collection(&self) -> NonFungibleTokenMapper<Self::Api>;
+    fn collection(&self) -> SingleValueMapper<TokenIdentifier>;
 
     #[view(getPause)]
     #[storage_mapper("pause")]
