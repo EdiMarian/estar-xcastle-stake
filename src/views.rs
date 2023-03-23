@@ -30,7 +30,7 @@ pub trait ViewsModule: storage::StorageModule {
         for sft_nonce in self.sfts_staked(address).iter() {
             let sft_staked = SftStaked {
                 nonce: sft_nonce.clone(),
-                amount: self.sft_staked_amount(address, &sft_nonce).get(),
+                balance: self.sft_staked_amount(address, &sft_nonce).get(),
                 staked_at: self.sft_staked_at(address, &sft_nonce).get(),
             };
             sfts.push(sft_staked);
