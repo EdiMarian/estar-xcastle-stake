@@ -6,7 +6,7 @@ COLLECTION_ID_HEX="0x$(echo -n ${COLLECTION_ID} | xxd -p -u | tr -d '\n')"
 TOKEN_ID="ECCU-29891f"
 TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
 
-PEM_FILE="/home/edi/Desktop/wallet-estar/wallet-owner.pem"
+PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://gateway.multiversx.com
 CHAINID=1
 ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
@@ -77,7 +77,7 @@ fundSystem() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $TOKEN_ID_HEX 400 $method_name \
+    --arguments $TOKEN_ID_HEX 100000 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }

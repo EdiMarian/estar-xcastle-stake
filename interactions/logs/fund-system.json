@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 549,
+        "nonce": 1383,
         "value": "0",
         "receiver": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6",
         "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
         "gasLimit": 30000000,
-        "data": "RVNEVFRyYW5zZmVyQDQ1NDM0MzU1MkQzMjM5MzgzOTMxNjZAMDE5MEA2Njc1NkU2NDUzNzk3Mzc0NjU2RA==",
+        "data": "RVNEVFRyYW5zZmVyQDQ1NDM0MzU1MkQzMjM5MzgzOTMxNjZAMDE4NkEwQDY2NzU2RTY0NTM3OTczNzQ2NTZE",
         "chainID": "1",
-        "version": 1,
-        "signature": "a704771a725b853d06e46353eb2c8584470563d73c9dbcc4ecf5c89853dd0bc54b2a5262c3761b080b3a8e389fd24e8cca94b8cff78766535255c3fbffdb9601"
+        "version": 2,
+        "signature": "dd3e1aa9db3f290ff7624b55e5c9b92f6089877500422205786416e9169aa383b06b421225556fbc524629108aabef5589a25bf46d8c83a5efbc80f66fdcd30e"
     },
-    "emittedTransactionData": "ESDTTransfer@454343552D323938393166@0190@66756E6453797374656D",
-    "emittedTransactionHash": "b3ee24437ef98688c097dac6f0328b8db9120b5d4ebd4e479d6a6db135332641",
+    "emittedTransactionData": "ESDTTransfer@454343552D323938393166@0186A0@66756E6453797374656D",
+    "emittedTransactionHash": "aa4256e3f0e0aba01bed86cc2576ccff0c64b54136a5b1c3ed8818d887aedd93",
     "contractAddress": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6"
 }
