@@ -1,15 +1,15 @@
 PROJECT="${PWD}"
 
-COLLECTION_ID="XCASTLE-ee733b"
+COLLECTION_ID="XCASTLE-76113d"
 COLLECTION_ID_HEX="0x$(echo -n ${COLLECTION_ID} | xxd -p -u | tr -d '\n')"
 
-TOKEN_ID="ECCU-29891f"
+TOKEN_ID="ECCU-f99634"
 TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
 
 PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://devnet-gateway.multiversx.com
 CHAINID=D
-ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
+ADDRESS=erd1qqqqqqqqqqqqqpgqzw659r8gvgagdeh6fjpf2nday28y0tcxwmfsjps0yt
 MY_ADDRESS="erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v"
 
 
@@ -43,7 +43,7 @@ setSftsAllowed() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsAllowed" \
-    --arguments 2 3 4 5 6 7 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 \
+    --arguments 1 2 3 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-allowed.json"
 }
@@ -65,7 +65,7 @@ setSftsReward() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsReward" \
-    --arguments 2 5 3 7 4 5 5 7 6 7 7 5 14 12 15 12 16 15 17 15 18 10 19 12 20 25 21 25 22 25 23 25 24 25 25 25 26 50 27 50 28 50 29 50 30 50 31 50\
+    --arguments 1 2 2 2 3 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
@@ -100,7 +100,7 @@ stake() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTNFTTransfer" \
-    --arguments $COLLECTION_ID_HEX 3 1 $ADDRESS $method_name \
+    --arguments $COLLECTION_ID_HEX 1 1 $ADDRESS $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/stake.json"
 }

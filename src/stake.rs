@@ -6,7 +6,7 @@ mod storage;
 pub mod model;
 mod views;
 
-const ONE_DAY_IN_SECONDS: u64 = 86400;
+const ONE_DAY_IN_SECONDS: u64 = 30;
 const TOKEN_DECIMALS: u64 = 1;
 
 #[multiversx_sc::contract]

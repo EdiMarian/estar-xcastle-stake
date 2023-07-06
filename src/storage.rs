@@ -1,5 +1,7 @@
 multiversx_sc::imports!();
 
+use crate::model::Resource;
+
 #[multiversx_sc::module]
 pub trait StorageModule {
     #[view(getCollection)]
@@ -46,5 +48,5 @@ pub trait StorageModule {
 
     #[view(getResource)]
     #[storage_mapper("resource")]
-    fn resource(&self, sft_nonce: u64) -> SingleValueMapper<Resource>;
+    fn resource(&self, sft_nonce: u64) -> SingleValueMapper<Resource<Self::Api>>;
 }
