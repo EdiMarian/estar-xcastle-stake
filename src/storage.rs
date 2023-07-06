@@ -43,4 +43,8 @@ pub trait StorageModule {
     #[view(getTokenAmount)]
     #[storage_mapper("token_amount")]
     fn token_amount(&self) -> SingleValueMapper<BigUint>;
+
+    #[view(getResource)]
+    #[storage_mapper("resource")]
+    fn resource(&self, sft_nonce: u64) -> SingleValueMapper<Resource>;
 }
