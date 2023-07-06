@@ -9,6 +9,8 @@ mod views;
 const ONE_DAY_IN_SECONDS: u64 = 30;
 const TOKEN_DECIMALS: u64 = 1;
 
+use crate::model::Resource;
+
 #[multiversx_sc::contract]
 pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[init]
@@ -46,6 +48,14 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
             let (nonce, reward_amount) = sft_with_reward_amount.into_tuple();
             self.sft_reward(&nonce).set(reward_amount);
         }
+    }
+
+    #[only_owner]
+    #[endpoint(setResource)]
+    fn set_resource(&self, sft_nonce: u64, resource: MultiValue2<TokenIdentifier, BigUint>) {
+        let (token_identifier, amount) = resource.into_tuple();
+        let resource = Resource::new(token_identifier, amount);
+        self.resource(sft_nonce).set(resource);
     }
 
     #[only_owner]

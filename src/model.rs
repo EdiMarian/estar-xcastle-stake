@@ -13,3 +13,13 @@ pub struct Resource<M: ManagedTypeApi> {
     pub identifier: TokenIdentifier<M>,
     pub amount: BigUint<M>,
 }
+
+impl<M: ManagedTypeApi> Resource<M> {
+    pub fn new(identifier: TokenIdentifier<M>, amount: BigUint<M>) -> Self {
+        Self {
+            identifier,
+            amount,
+        }
+    }
+}
+

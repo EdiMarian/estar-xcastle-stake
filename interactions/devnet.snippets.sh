@@ -70,6 +70,18 @@ setSftsReward() {
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
 
+setResource() {
+  identifier="0x$(echo -n 'FOOD-41d22e' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="setResource" \
+    --arguments 3 $identifier 2000000000000000000 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
+}
+
 fundSystem() {
   method_name="0x$(echo -n 'fundSystem' | xxd -p -u | tr -d '\n')"
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
@@ -163,6 +175,11 @@ getSftReward() {
 
 getUsersStaked() {
   mxpy --verbose contract query ${ADDRESS} --function="getUsersStaked" \
+    --proxy=${PROXY}
+}
+
+getResource() {
+  mxpy --verbose contract query ${ADDRESS} --function="getResource" --arguments 3 \
     --proxy=${PROXY}
 }
 
