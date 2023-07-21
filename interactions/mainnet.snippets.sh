@@ -82,6 +82,20 @@ fundSystem() {
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
 
+test() {
+  method_name="0x$(echo -n 'setTokenAmount' | xxd -p -u | tr -d '\n')"
+  token="0x$(echo -n 'XCASTLE-ee733b' | xxd -p -u | tr -d '\n')"
+  token_swapped="0x$(echo -n 'COMMONCHAR-435910' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${MY_ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="ESDTNFTTransfer" \
+    --arguments $token 12 100 erd1qqqqqqqqqqqqqpgqzfu6mh4ryxmv2x7va4cuc437nh3qaq7lwmfs2fctds $method_name $token_swapped 6  \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/fund-system.json"
+}
+
 withdrawFunds() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \

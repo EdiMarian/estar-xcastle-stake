@@ -8,18 +8,28 @@ pub struct SftStaked<M: ManagedTypeApi> {
     pub staked_at: u64,
 }
 
-#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, TypeAbi)]
-pub struct Resource<M: ManagedTypeApi> {
-    pub identifier: TokenIdentifier<M>,
+#[derive(TopEncode, TopDecode, NestedEncode, NestedDecode, PartialEq, TypeAbi, ManagedVecItem)]
+pub enum TokenType {
+  Eccu,
+  Food,
+  Wood,
+  Beer,
+  Stone,
+  Iron,
+  Wargear,
+}
+
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, TypeAbi, ManagedVecItem)]
+pub struct TokenReward<M: ManagedTypeApi> {
+    pub name: TokenType,
     pub amount: BigUint<M>,
 }
 
-impl<M: ManagedTypeApi> Resource<M> {
-    pub fn new(identifier: TokenIdentifier<M>, amount: BigUint<M>) -> Self {
-        Self {
-            identifier,
-            amount,
-        }
+impl<M: ManagedTypeApi> TokenReward<M> {
+  pub fn new(name: TokenType, amount: BigUint<M>) -> Self {
+    Self {
+      name,
+      amount
     }
+  }
 }
-
