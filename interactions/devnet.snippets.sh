@@ -24,14 +24,14 @@ deploy() {
     --bytecode="${PROJECT}/output/stake.wasm" \
     --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX || return
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $IRON_ID_HEX || return
 }
 
 updateContract() {
   mxpy --verbose contract upgrade ${ADDRESS} --bytecode="${PROJECT}/output/stake.wasm" --recall-nonce --pem=${PEM_FILE} \
     --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $IRON_ID_HEX
 }
 
 togglePause() {
@@ -72,7 +72,7 @@ setSftEccu() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftEccu" \
-    --arguments 2 1 \
+    --arguments 3 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
@@ -113,6 +113,18 @@ foodFund() {
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
 
+ironFund() {
+  method_name="0x$(echo -n 'ironFund' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="ESDTTransfer" \
+    --arguments $IRON_ID_HEX 1000000000000000000000 $method_name \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/fund-system.json"
+}
+
 withdrawFunds() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
@@ -131,7 +143,7 @@ stake() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTNFTTransfer" \
-    --arguments $COLLECTION_ID_HEX 3 1 $ADDRESS $method_name \
+    --arguments $COLLECTION_ID_HEX 3 2 $ADDRESS $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/stake.json"
 }
@@ -142,7 +154,7 @@ unStake() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="unStake" \
-    --arguments $COLLECTION_ID_HEX 2 1 \
+    --arguments $COLLECTION_ID_HEX 3 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
@@ -219,6 +231,21 @@ calculateReward() {
 
 getFood() {
   mxpy --verbose contract query ${ADDRESS} --function="getUserFood" --arguments $MY_ADDRESS \
+    --proxy=${PROXY}
+}
+
+getEccuAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getEccuAmount" \
+    --proxy=${PROXY}
+}
+
+getFoodAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getFoodAmount" \
+    --proxy=${PROXY}
+}
+
+getIronAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getIronAmount" \
     --proxy=${PROXY}
 }
 

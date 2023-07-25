@@ -1,6 +1,6 @@
 {
     "emittedTransaction": {
-        "nonce": 201,
+        "nonce": 236,
         "value": "0",
         "receiver": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh",
         "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
@@ -9,9 +9,9 @@
         "data": "Y2xhaW1SZXdhcmRz",
         "chainID": "D",
         "version": 2,
-        "signature": "acb7afebf0a82867713f98ce4d2315ec93fe98820a0d54703b26f047c7dd4442393a719569da59613f445b73ac8f5ecd4022ec3a1d8bfb53b5bc6c969f75a601"
+        "signature": "7abc1329b6b99a95fd7c68a517fda238e0733cfd06c93f6f5fbe5454031918c80db45e0821e51ba9e63dd9028e7b41ec621e6b7fdf819b1feb63d058d86cc807"
     },
     "emittedTransactionData": "claimRewards",
-    "emittedTransactionHash": "1690b3881634ba438b04665e869c719f73bac4ffcf149ad19f530e78cca4c43e",
+    "emittedTransactionHash": "4bd4dd855c5e242a8462d3d47fa7f8895b0e1dfd7acf4a3d7edd8ae8b2743065",
     "contractAddress": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh"
 }

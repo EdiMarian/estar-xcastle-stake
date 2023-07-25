@@ -9,17 +9,32 @@ mod views;
 use crate::model::*;
 
 const ONE_DAY_IN_SECONDS: u64 = 30;
-const TOKEN_DECIMALS: u64 = 1;
+// sa modific la token sa fie 1
+const TOKEN_DECIMALS: u64 = 10;
 const RESOURCE_DECIMALS: u64 = 1000000000000000000;
 
 #[multiversx_sc::contract]
 pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     #[init]
-    fn init(&self, collection: TokenIdentifier, eccu_id: TokenIdentifier, food_id: TokenIdentifier) {
+    fn init(
+        &self,
+        collection: TokenIdentifier,
+        eccu_id: TokenIdentifier,
+        food_id: TokenIdentifier,
+        beer_id: TokenIdentifier,
+        wood_id: TokenIdentifier,
+        stone_id: TokenIdentifier,
+        iron_id: TokenIdentifier,
+        wargear_id: TokenIdentifier,
+    ) {
         self.collection().set(collection);
         self.eccu_identifier().set(eccu_id);
         self.food_identifier().set(food_id);
-        // sa adaug si restu
+        self.beer_identifier().set(beer_id);
+        self.wood_identifier().set(wood_id);
+        self.stone_identifier().set(stone_id);
+        self.iron_identifier().set(iron_id);
+        self.wargear_identifier().set(wargear_id);
     }
 
     #[only_owner]
@@ -183,11 +198,12 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         require!(self.sfts_staked(&caller).contains(&nonce), "You don't have this sft at stake!");
         require!(self.sft_staked_amount(&caller, &nonce).get() >= amount, "You don't have enough sfts at stake!");
 
-        self.calculate_rewards_and_save(nonce, &caller, &amount);
+        self.calculate_rewards_and_save(nonce, &caller, &BigUint::from(self.sft_staked_amount(&caller, &nonce).get()));
         let amount_staked = self.sft_staked_amount(&caller, &nonce).get();
 
         if amount_staked - &amount > BigUint::zero() {
             self.sft_staked_amount(&caller, &nonce).update(|amount_on_stake| *amount_on_stake -= amount.clone());
+            self.sft_staked_at(&caller, &nonce).set(self.blockchain().get_block_timestamp());
         } else {
             self.sft_staked_amount(&caller, &nonce).clear();
             self.sft_staked_at(&caller, &nonce).clear();
@@ -205,7 +221,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
         let caller = self.blockchain().get_caller();
         let tokens = self.calculate_rewards(&caller);
 
-        require!(tokens.len() > 0, "You don't bahe rewards!");
+        require!(tokens.len() > 0, "You don't have rewards!");
 
         self.reset_sfts_staked_time(&caller);
 
