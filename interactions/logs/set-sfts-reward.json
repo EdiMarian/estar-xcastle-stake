@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 223,
+        "nonce": 1469,
         "value": "0",
-        "receiver": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh",
+        "receiver": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6",
         "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
         "gasLimit": 30000000,
-        "data": "c2V0U2Z0RWNjdUAwM0AwMQ==",
-        "chainID": "D",
+        "data": "c2V0U2Z0UmVzb3VyY2VAMDVAMDA=",
+        "chainID": "1",
         "version": 2,
-        "signature": "a961cef4330ca54c29c054cbd6f6d6132677f2285558e5d2023b21a2ed66716f00eddcdc44ca23438b9542f436a88591306b147e14cb2f4c93fbd879d08fbd0e"
+        "signature": "fdea3a53c73b21a7b39bb28d75e7b8c72f3a0c6a68b7a69004d93ba1ded974f64b28d8d2fa8ae17deaf10bad529f99000a9b83a3cc4fbb72a71b600f066a3101"
     },
-    "emittedTransactionData": "setSftEccu@03@01",
-    "emittedTransactionHash": "5e290ec61b967a8b82cd198d7b9030f8e3d895b424f877843699331c4d6bad81",
-    "contractAddress": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh"
+    "emittedTransactionData": "setSftResource@05@00",
+    "emittedTransactionHash": "1c89caa2547c235a30a1b54839811e16afa414ea47082eaca9165d53f88d3c27",
+    "contractAddress": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6"
 }

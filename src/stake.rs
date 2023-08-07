@@ -8,9 +8,8 @@ mod views;
 
 use crate::model::*;
 
-const ONE_DAY_IN_SECONDS: u64 = 30;
-// sa modific la token sa fie 1
-const TOKEN_DECIMALS: u64 = 10;
+const ONE_DAY_IN_SECONDS: u64 = 86400;
+const TOKEN_DECIMALS: u64 = 1;
 const RESOURCE_DECIMALS: u64 = 1000000000000000000;
 
 #[multiversx_sc::contract]
@@ -366,7 +365,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
                 },
                 6 | 17 | 24 | 30 => {
                     tokens.push(
-                        TokenReward::new(TokenType::Food, sft_resource * actual_reward.clone())
+                        TokenReward::new(TokenType::Beer, sft_resource * actual_reward.clone())
                     );
                     tokens.push(
                         TokenReward::new(TokenType::Eccu, sft_eccu * actual_reward)
@@ -374,7 +373,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
                 },
                 34 | 40 | 47 | 54 => {
                     tokens.push(
-                        TokenReward::new(TokenType::Food, sft_resource * actual_reward.clone())
+                        TokenReward::new(TokenType::Beer, sft_resource * actual_reward.clone())
                     );
                 },
                 3 | 16 | 22 | 27 => {

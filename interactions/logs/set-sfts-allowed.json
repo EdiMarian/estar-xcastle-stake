@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 175,
+        "nonce": 1403,
         "value": "0",
-        "receiver": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh",
+        "receiver": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6",
         "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
-        "gasLimit": 30000000,
-        "data": "c2V0U2Z0c0FsbG93ZWRAMDFAMDJAMDM=",
-        "chainID": "D",
+        "gasLimit": 60000000,
+        "data": "c2V0U2Z0c0FsbG93ZWRAMDJAMjNAMTNAMjlAMTdAMzFAMURAMzdAMjVAMkJAMzNAMzlAMDZAMjJAMTFAMjhAMThAMkZAMUVAMzZAMDNAMjRAMTBAMkFAMTZAMzJAMUJAMzhAMDRAMjFAMTJAMjdAMTlAMkVAMUZAMzVAMjZAMkNAMzRAM0FAMDVAMDdAMEVAMEZAMTRAMTVAMUFAMUM=",
+        "chainID": "1",
         "version": 2,
-        "signature": "b9fb35a659a955e03a2ecd43df4caddc01f5c020a825b441f90f4f4b0ff59211ac26afc2e4cc17b7348b6afa6a0cefbfe9acf7c6eb7aa8da7ac6225c937c7302"
+        "signature": "4b571891574b45ac0cff430d03d1bd7058b7ca12f1450212418334f628838f7b9ce668c3bf7390265bf889ff45e200d31f78cf1cdeb632352442520135eabe0d"
     },
-    "emittedTransactionData": "setSftsAllowed@01@02@03",
-    "emittedTransactionHash": "a8a1066004e83833c751956072c1157ca233913af0d59f0f6e0ddf71cf3cda8c",
-    "contractAddress": "erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh"
+    "emittedTransactionData": "setSftsAllowed@02@23@13@29@17@31@1D@37@25@2B@33@39@06@22@11@28@18@2F@1E@36@03@24@10@2A@16@32@1B@38@04@21@12@27@19@2E@1F@35@26@2C@34@3A@05@07@0E@0F@14@15@1A@1C",
+    "emittedTransactionHash": "d17eb84c767536da16181c15bd21da62aba20f85915d80f7e94305a5468ae1bb",
+    "contractAddress": "erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6"
 }

@@ -9,8 +9,20 @@ ECCU_ID_HEX="0x$(echo -n ${ECCU_ID} | xxd -p -u | tr -d '\n')"
 FOOD_ID="FOOD-41d22e"
 FOOD_ID_HEX="0x$(echo -n ${FOOD_ID} | xxd -p -u | tr -d '\n')"
 
-IRON_ID="IRON-dddc4c"
+BEER_ID="BEER-41d22e"
+BEER_ID_HEX="0x$(echo -n ${BEER_ID} | xxd -p -u | tr -d '\n')"
+
+WOOD_ID="WOOD-41d22e"
+WOOD_ID_HEX="0x$(echo -n ${WOOD_ID} | xxd -p -u | tr -d '\n')"
+
+STONE_ID="STONE-41d22e"
+STONE_ID_HEX="0x$(echo -n ${STONE_ID} | xxd -p -u | tr -d '\n')"
+
+IRON_ID="IRON-41d22e"
 IRON_ID_HEX="0x$(echo -n ${IRON_ID} | xxd -p -u | tr -d '\n')"
+
+WARGEAR_ID="WARGEAR-dddc4c"
+WARGEAR_ID_HEX="0x$(echo -n ${WARGEAR_ID} | xxd -p -u | tr -d '\n')"
 
 PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://devnet-gateway.multiversx.com
@@ -24,14 +36,14 @@ deploy() {
     --bytecode="${PROJECT}/output/stake.wasm" \
     --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $IRON_ID_HEX || return
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $BEER_ID_HEX $WOOD_ID_HEX $STONE_ID_HEX $IRON_ID_HEX $WARGEAR_ID_HEX || return
 }
 
 updateContract() {
   mxpy --verbose contract upgrade ${ADDRESS} --bytecode="${PROJECT}/output/stake.wasm" --recall-nonce --pem=${PEM_FILE} \
     --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $IRON_ID_HEX
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $BEER_ID_HEX $WOOD_ID_HEX $STONE_ID_HEX $IRON_ID_HEX $WARGEAR_ID_HEX
 }
 
 togglePause() {
@@ -95,7 +107,7 @@ eccuFund() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $ECCU_ID_HEX 1000 $method_name \
+    --arguments $ECCU_ID_HEX 200000 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
