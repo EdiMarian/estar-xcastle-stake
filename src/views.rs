@@ -46,11 +46,11 @@ pub trait ViewsModule: storage::StorageModule {
                     self.user_wood(address).update(|amount| *amount += sft_resource * actual_reward);
                 },
                 6 | 17 | 24 | 30 => {
-                    self.user_food(address).update(|amount| *amount += sft_resource * actual_reward.clone());
+                    self.user_beer(address).update(|amount| *amount += sft_resource * actual_reward.clone());
                     self.user_eccu(address).update(|amount| *amount += sft_eccu * actual_reward);
                 },
                 34 | 40 | 47 | 54 => {
-                    self.user_food(address).update(|amount| *amount += sft_resource * actual_reward);
+                    self.user_beer(address).update(|amount| *amount += sft_resource * actual_reward);
                 },
                 3 | 16 | 22 | 27 => {
                     self.user_iron(address).update(|amount| *amount += sft_resource * actual_reward.clone());
