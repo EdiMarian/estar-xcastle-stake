@@ -24,7 +24,7 @@ IRON_ID_HEX="0x$(echo -n ${IRON_ID} | xxd -p -u | tr -d '\n')"
 WARGEAR_ID="WARGEAR-932f1d"
 WARGEAR_ID_HEX="0x$(echo -n ${WARGEAR_ID} | xxd -p -u | tr -d '\n')"
 
-PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
+PEM_FILE="/home/edimarian/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://gateway.multiversx.com
 CHAINID=1
 ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
@@ -61,7 +61,7 @@ setSftsAllowed() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsAllowed" \
-    --arguments 2 35 19 41 23 49 29 55 37 43 51 57 6 34 17 40 24 47 30 54 3 36 16 42 22 50 27 56 4 33 18 39 25 46 31 53 38 44 52 58 5 7 14 15 20 21 26 28 \
+    --arguments 2 9 35 19 41 23 49 29 55 37 43 51 57 6 34 17 40 24 47 30 54 3 36 16 42 22 50 27 56 4 33 18 39 25 46 31 53 38 44 52 58 5 7 14 15 20 21 26 28 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-allowed.json"
 }
@@ -83,7 +83,7 @@ setSftEccu() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftEccu" \
-    --arguments 28 128 \
+    --arguments 9 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
@@ -183,12 +183,13 @@ unStake() {
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
 
-claimRewards() {
+withdrawFunds() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --function="claimRewards" \
+    --function="withdrawFunds" \
+    --arguments 54023 \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
@@ -238,8 +239,8 @@ getTokenPayment() {
     --proxy=${PROXY}
 }
 
-getWargearAmount() {
-  mxpy --verbose contract query ${ADDRESS} --function="getWargearAmount" \
+getEccuAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getEccuAmount" \
     --proxy=${PROXY}
 }
 

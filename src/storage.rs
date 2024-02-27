@@ -19,22 +19,19 @@ pub trait StorageModule {
 
     #[view(getSftStakedAmount)]
     #[storage_mapper("sft_staked_amount")]
-    fn sft_staked_amount(&self, address: &ManagedAddress, nonce: &u64) -> SingleValueMapper<BigUint>;
+    fn sft_staked_amount(
+        &self,
+        address: &ManagedAddress,
+        nonce: &u64,
+    ) -> SingleValueMapper<BigUint>;
 
     #[view(getSftStakedAt)]
     #[storage_mapper("sft_staked_at")]
     fn sft_staked_at(&self, address: &ManagedAddress, nonce: &u64) -> SingleValueMapper<u64>;
 
-    #[view(getSftEccu)]
-    #[storage_mapper("sft_eccu")]
-    fn sft_eccu(&self, nonce: &u64) -> SingleValueMapper<BigUint>;
-
     #[view(getSftResource)]
     #[storage_mapper("sft_resource")]
     fn sft_resource(&self, nonce: &u64) -> SingleValueMapper<BigUint>;
-
-    #[storage_mapper("user_eccu")]
-    fn user_eccu(&self, address: &ManagedAddress) -> SingleValueMapper<BigUint>;
 
     #[view(getUserFood)]
     #[storage_mapper("user_food")]
@@ -88,22 +85,14 @@ pub trait StorageModule {
     #[storage_mapper("wargear_identifier")]
     fn wargear_identifier(&self) -> SingleValueMapper<TokenIdentifier>;
 
-    #[view(getEccuIdentifier)]
-    #[storage_mapper("eccu_identifier")]
-    fn eccu_identifier(&self) -> SingleValueMapper<TokenIdentifier>;
-
-    #[view(getEccuAmount)]
-    #[storage_mapper("eccu_amount")]
-    fn eccu_amount(&self) -> SingleValueMapper<BigUint>;
-    
     #[view(getFoodAmount)]
     #[storage_mapper("food_amount")]
     fn food_amount(&self) -> SingleValueMapper<BigUint>;
-    
+
     #[view(getBeerAmount)]
     #[storage_mapper("beer_amount")]
     fn beer_amount(&self) -> SingleValueMapper<BigUint>;
-    
+
     #[view(getWoodAmount)]
     #[storage_mapper("wood_amount")]
     fn wood_amount(&self) -> SingleValueMapper<BigUint>;
