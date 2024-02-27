@@ -1,30 +1,49 @@
 PROJECT="${PWD}"
 
-COLLECTION_ID="XCASTLE-ee733b"
+COLLECTION_ID="XCASTLE-76113d"
 COLLECTION_ID_HEX="0x$(echo -n ${COLLECTION_ID} | xxd -p -u | tr -d '\n')"
 
-TOKEN_ID="ECCU-29891f"
-TOKEN_ID_HEX="0x$(echo -n ${TOKEN_ID} | xxd -p -u | tr -d '\n')"
+ECCU_ID="ECCU-f99634"
+ECCU_ID_HEX="0x$(echo -n ${ECCU_ID} | xxd -p -u | tr -d '\n')"
+
+FOOD_ID="FOOD-41d22e"
+FOOD_ID_HEX="0x$(echo -n ${FOOD_ID} | xxd -p -u | tr -d '\n')"
+
+BEER_ID="BEER-41d22e"
+BEER_ID_HEX="0x$(echo -n ${BEER_ID} | xxd -p -u | tr -d '\n')"
+
+WOOD_ID="WOOD-41d22e"
+WOOD_ID_HEX="0x$(echo -n ${WOOD_ID} | xxd -p -u | tr -d '\n')"
+
+STONE_ID="STONE-41d22e"
+STONE_ID_HEX="0x$(echo -n ${STONE_ID} | xxd -p -u | tr -d '\n')"
+
+IRON_ID="IRON-41d22e"
+IRON_ID_HEX="0x$(echo -n ${IRON_ID} | xxd -p -u | tr -d '\n')"
+
+WARGEAR_ID="WARGEAR-dddc4c"
+WARGEAR_ID_HEX="0x$(echo -n ${WARGEAR_ID} | xxd -p -u | tr -d '\n')"
 
 PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
-PROXY=https://gateway.multiversx.com
-CHAINID=1
-ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
-MY_ADDRESS="erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v"
+PROXY=https://devnet-gateway.multiversx.com
+CHAINID=D
+ADDRESS=erd1qqqqqqqqqqqqqpgqszdxmexgleuy3cayct4fh236sd6uvkcnwmfs945xuh
+MY_ADDRESS=erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v
 
 
 deploy() {
-  mxpy --verbose contract deploy --project=${PROJECT} --recall-nonce --pem=${PEM_FILE} \
-    --gas-limit=60000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
+  mxpy --verbose contract deploy --recall-nonce --pem=${PEM_FILE} \
+    --bytecode="${PROJECT}/output/stake.wasm" \
+    --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/deploy.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $TOKEN_ID_HEX || return
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $BEER_ID_HEX $WOOD_ID_HEX $STONE_ID_HEX $IRON_ID_HEX $WARGEAR_ID_HEX || return
 }
 
 updateContract() {
-  mxpy --verbose contract upgrade ${ADDRESS} --project=${PROJECT} --recall-nonce --pem=${PEM_FILE} \
-    --gas-limit=60000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
+  mxpy --verbose contract upgrade ${ADDRESS} --bytecode="${PROJECT}/output/stake.wasm" --recall-nonce --pem=${PEM_FILE} \
+    --gas-limit=600000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $TOKEN_ID_HEX
+    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $BEER_ID_HEX $WOOD_ID_HEX $STONE_ID_HEX $IRON_ID_HEX $WARGEAR_ID_HEX
 }
 
 togglePause() {
@@ -43,7 +62,7 @@ setSftsAllowed() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftsAllowed" \
-    --arguments 2 3 4 5 6 7 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 \
+    --arguments 1 2 3 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-allowed.json"
 }
@@ -59,25 +78,61 @@ removeSftsAllowed() {
     --outfile="${PROJECT}/interactions/logs/remove-sfts-allowed.json"
 }
 
-setSftsReward() {
+setSftEccu() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --function="setSftsReward" \
-    --arguments 2 5 3 7 4 5 5 7 6 7 7 5 14 12 15 12 16 15 17 15 18 10 19 12 20 25 21 25 22 25 23 25 24 25 25 25 26 50 27 50 28 50 29 50 30 50 31 50\
+    --function="setSftEccu" \
+    --arguments 3 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }
 
-fundSystem() {
-  method_name="0x$(echo -n 'fundSystem' | xxd -p -u | tr -d '\n')"
+setSftResource() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="setSftResource" \
+    --arguments 3 2 \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
+}
+
+eccuFund() {
+  method_name="0x$(echo -n 'eccuFund' | xxd -p -u | tr -d '\n')"
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTTransfer" \
-    --arguments $TOKEN_ID_HEX 100000 $method_name \
+    --arguments $ECCU_ID_HEX 200000 $method_name \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/fund-system.json"
+}
+
+
+foodFund() {
+  method_name="0x$(echo -n 'foodFund' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="ESDTTransfer" \
+    --arguments $FOOD_ID_HEX 1000000000000000000000 $method_name \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/fund-system.json"
+}
+
+ironFund() {
+  method_name="0x$(echo -n 'ironFund' | xxd -p -u | tr -d '\n')"
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=30000000 \
+    --proxy=${PROXY} --chain=${CHAINID} \
+    --function="ESDTTransfer" \
+    --arguments $IRON_ID_HEX 1000000000000000000000 $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/fund-system.json"
 }
@@ -100,7 +155,7 @@ stake() {
     --gas-limit=60000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="ESDTNFTTransfer" \
-    --arguments $COLLECTION_ID_HEX 3 1 $ADDRESS $method_name \
+    --arguments $COLLECTION_ID_HEX 3 2 $ADDRESS $method_name \
     --send \
     --outfile="${PROJECT}/interactions/logs/stake.json"
 }
@@ -111,7 +166,7 @@ unStake() {
     --gas-limit=30000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="unStake" \
-    --arguments $COLLECTION_ID_HEX 2 1 \
+    --arguments $COLLECTION_ID_HEX 3 1 \
     --send \
     --outfile="${PROJECT}/interactions/logs/unstake.json"
 }
@@ -166,6 +221,11 @@ getUsersStaked() {
     --proxy=${PROXY}
 }
 
+getResource() {
+  mxpy --verbose contract query ${ADDRESS} --function="getResource" --arguments 3 \
+    --proxy=${PROXY}
+}
+
 getTokenPayment() {
   mxpy --verbose contract query ${ADDRESS} --function="getTokenPayment" \
     --proxy=${PROXY}
@@ -176,7 +236,32 @@ getTokenAmount() {
     --proxy=${PROXY}
 }
 
-getRewards() {
-  mxpy --verbose contract query ${ADDRESS} --function="getRewards" --arguments $MY_ADDRESS \
+calculateReward() {
+  mxpy --verbose contract query ${ADDRESS} --function="calculateReward" --arguments $MY_ADDRESS \
+    --proxy=${PROXY}
+}
+
+getFood() {
+  mxpy --verbose contract query ${ADDRESS} --function="getUserFood" --arguments $MY_ADDRESS \
+    --proxy=${PROXY}
+}
+
+getEccuAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getEccuAmount" \
+    --proxy=${PROXY}
+}
+
+getFoodAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getFoodAmount" \
+    --proxy=${PROXY}
+}
+
+getIronAmount() {
+  mxpy --verbose contract query ${ADDRESS} --function="getIronAmount" \
+    --proxy=${PROXY}
+}
+
+getSftResource() {
+  mxpy --verbose contract query ${ADDRESS} --function="getSftResource" --arguments 2 \
     --proxy=${PROXY}
 }

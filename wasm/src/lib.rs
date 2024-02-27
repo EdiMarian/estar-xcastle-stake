@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////
 
 // Init:                                 1
-// Endpoints:                           20
+// Endpoints:                           47
 // Async Callback (empty):               1
-// Total number of exported functions:  22
+// Total number of exported functions:  49
 
 #![no_std]
 #![feature(alloc_error_handler, lang_items)]
@@ -21,22 +21,49 @@ multiversx_sc_wasm_adapter::endpoints! {
         togglePause
         setSftsAllowed
         removeSftsAllowed
-        setSftsReward
-        fundSystem
+        setSftEccu
+        setSftResource
+        eccuFund
+        foodFund
+        beerFund
+        woodFund
+        stoneFund
+        ironFund
+        wargearFund
         withdrawFunds
         stake
         unStake
         claimRewards
+        calculateForAnSpecific
+        calculateReward
         getCollection
         getPause
         getSftsAllowed
         getSftStakedAmount
         getSftStakedAt
-        getSftReward
+        getSftEccu
+        getSftResource
+        getUserFood
+        getUserBeer
+        getUserWood
+        getUserStone
+        getUserIron
+        getUserWargear
         getUsersStaked
-        getTokenPayment
-        getTokenAmount
-        getRewards
+        getFoodIdentifier
+        getBeerIdentifier
+        getWoodIdentifier
+        getStoneIdentifier
+        getIronIdentifier
+        getWargearIdentifier
+        getEccuIdentifier
+        getEccuAmount
+        getFoodAmount
+        getBeerAmount
+        getWoodAmount
+        getStoneAmount
+        getIronAmount
+        getWargearAmount
         getSftsStaked
     )
 }

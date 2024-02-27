@@ -1,17 +1,17 @@
 {
     "emittedTransaction": {
-        "nonce": 443,
+        "nonce": 233,
         "value": "0",
-        "receiver": "erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454",
-        "sender": "erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454",
+        "receiver": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
+        "sender": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v",
         "gasPrice": 1000000000,
         "gasLimit": 60000000,
-        "data": "RVNEVE5GVFRyYW5zZmVyQDU4NDM0MTUyNDQyRDM2NjMzMjM0NjQ2MUAwM0AwMUAwMDAwMDAwMDAwMDAwMDAwMDUwMDQ4NTZGOTlCRjlDOTQ0QzZBNkFDQUUyRDY4NTU5MTFBNzZBQkRBQkMzNDA0QDczNzQ2MTZCNjU=",
+        "data": "RVNEVE5GVFRyYW5zZmVyQDU4NDM0MTUzNTQ0QzQ1MkQzNzM2MzEzMTMzNjRAMDNAMDJAMDAwMDAwMDAwMDAwMDAwMDA1MDA4MDlBNkRFNEM4RkU3ODQ4RTNBNEMyRUE5QkFBM0E4Mzc1QzY1QjEzNzZEM0A3Mzc0NjE2QjY1",
         "chainID": "D",
-        "version": 1,
-        "signature": "986a5886828d699c946a4c5cb281985a0ba92939ccca0949ea9727eb2d6d58eedabcfde28a4e871913b4ad9ada9e5f9c8b690244da3cec459110b7737d9e5e03"
+        "version": 2,
+        "signature": "9ba9b44e24c7d19eb284cd7d24d60458efc09389472746ae02c5bb97143ce9144afa5edb466a8271c09a96d298364be994db948e89a81f2410e9262ddf868a0c"
     },
-    "emittedTransactionData": "ESDTNFTTransfer@58434152442D366332346461@03@01@000000000000000005004856F99BF9C944C6A6ACAE2D6855911A76ABDABC3404@7374616B65",
-    "emittedTransactionHash": "f274706165ca1debb70f912a57379d0ac8693f7746a1a76f082cafe715f5e15d",
-    "contractAddress": "erd1a6p39rlsn2lm20adqe5tmzy543luwqx4dywzflr2dmtwdf75xszqdw9454"
+    "emittedTransactionData": "ESDTNFTTransfer@58434153544C452D373631313364@03@02@00000000000000000500809A6DE4C8FE7848E3A4C2EA9BAA3A8375C65B1376D3@7374616B65",
+    "emittedTransactionHash": "d8ab7cda9d3dc3c4746ddadf87da78399931df11e757049d0b14c48a2a721bab",
+    "contractAddress": "erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v"
 }
