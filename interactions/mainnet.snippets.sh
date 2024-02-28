@@ -24,7 +24,7 @@ IRON_ID_HEX="0x$(echo -n ${IRON_ID} | xxd -p -u | tr -d '\n')"
 WARGEAR_ID="WARGEAR-932f1d"
 WARGEAR_ID_HEX="0x$(echo -n ${WARGEAR_ID} | xxd -p -u | tr -d '\n')"
 
-PEM_FILE="/home/edimarian/Desktop/wallet-estar/wallet-owner.pem"
+PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
 PROXY=https://gateway.multiversx.com
 CHAINID=1
 ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
@@ -41,8 +41,17 @@ deploy() {
 updateContract() {
   mxpy --verbose contract upgrade ${ADDRESS} --bytecode="${PROJECT}/output/stake.wasm" --recall-nonce --pem=${PEM_FILE} \
     --gas-limit=100000000 --send --outfile="${PROJECT}/interactions/logs/update.json" \
+    --proxy=${PROXY} --chain=${CHAINID}
+}
+
+clearContract() {
+  mxpy --verbose contract call ${ADDRESS} --recall-nonce \
+    --pem=${PEM_FILE} \
+    --gas-limit=500000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
-    --arguments $COLLECTION_ID_HEX $ECCU_ID_HEX $FOOD_ID_HEX $BEER_ID_HEX $WOOD_ID_HEX $STONE_ID_HEX $IRON_ID_HEX $WARGEAR_ID_HEX
+    --function="clearContract" \
+    --send \
+    --outfile="${PROJECT}/interactions/logs/toggle-pause.json"
 }
 
 togglePause() {

@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////
 
 // Init:                                 1
-// Endpoints:                           42
+// Endpoints:                           44
 // Async Callback (empty):               1
-// Total number of exported functions:  44
+// Total number of exported functions:  46
 
 #![no_std]
 #![allow(internal_features)]
@@ -20,6 +20,8 @@ multiversx_sc_wasm_adapter::endpoints! {
     stake
     (
         init => init
+        clearContract => clear_contract
+        upgrade => upgrade
         togglePause => toggle_pause
         setSftsAllowed => set_sfts_allowed
         removeSftsAllowed => remove_sfts_allowed

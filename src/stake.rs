@@ -34,6 +34,33 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
     }
 
     #[only_owner]
+    #[endpoint(clearContract)]
+    fn clear_contract(&self) {
+        let mut index: u8 = 0;
+        let identifier = self.collection().get();
+
+        for address in self.users_staked().iter() {
+            let mut transfers = ManagedVec::new();
+            if index == 10 {
+                break;
+            }
+
+            for nonce in self.sfts_staked(&address).iter() {
+                let amount = self.sft_staked_amount(&address, &nonce).get();
+                let transfer = EsdtTokenPayment::new(identifier.clone(), nonce, amount);
+
+                transfers.push(transfer);
+            }
+
+            self.send().direct_multi(&address, &transfers);
+            index += 1;
+        }
+    }
+
+    #[upgrade]
+    fn upgrade(&self) {}
+
+    #[only_owner]
     #[endpoint(togglePause)]
     fn toggle_pause(&self) {
         self.pause().update(|pause| *pause = !*pause);
