@@ -25,7 +25,7 @@ WARGEAR_ID="WARGEAR-932f1d"
 WARGEAR_ID_HEX="0x$(echo -n ${WARGEAR_ID} | xxd -p -u | tr -d '\n')"
 
 PEM_FILE="/home/edi-marian/Desktop/wallet-estar/wallet-owner.pem"
-PROXY=https://gateway.multiversx.com
+PROXY=https://estar_games:jfNdeXACJgDYxCYrJPpVD7WCXNpu9MkB5ERd@gateway2.mvx-api.estar.games
 CHAINID=1
 ADDRESS=erd1qqqqqqqqqqqqqpgqdjfrnwzygxl06n2v0js6ar0vjwgmcjnswmfsays9c6
 MY_ADDRESS="erd1szcgm7vq3tmyxfgd4wd2k2emh59az8jq5jjpj9799a0k59u0wmfss4vw3v"
@@ -100,10 +100,10 @@ setSftEccu() {
 setSftResource() {
   mxpy --verbose contract call ${ADDRESS} --recall-nonce \
     --pem=${PEM_FILE} \
-    --gas-limit=30000000 \
+    --gas-limit=10000000 \
     --proxy=${PROXY} --chain=${CHAINID} \
     --function="setSftResource" \
-    --arguments 5 0 \
+    --arguments 58 192 \
     --send \
     --outfile="${PROJECT}/interactions/logs/set-sfts-reward.json"
 }

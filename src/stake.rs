@@ -437,7 +437,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
                 / BigUint::from(ONE_DAY_IN_SECONDS);
 
             match nonce {
-                2 | 19 | 23 | 29 | 35 | 41 | 49 | 55 => {
+                2 | 19 | 23 | 29 | 35 | 41 | 49 | 55 | 7 | 14 | 20 | 28 => {
                     tokens.push(TokenReward::new(
                         TokenType::Food,
                         actual_reward.clone() * amount_to_unstake,
@@ -461,7 +461,7 @@ pub trait StakeContract: storage::StorageModule + views::ViewsModule {
                         actual_reward.clone() * amount_to_unstake,
                     ));
                 }
-                4 | 18 | 25 | 31 | 33 | 39 | 46 | 53 => {
+                4 | 18 | 25 | 31 | 33 | 39 | 46 | 53 | 5 | 15 | 21 | 26 => {
                     tokens.push(TokenReward::new(
                         TokenType::Wargear,
                         actual_reward.clone() * amount_to_unstake,
